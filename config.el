@@ -76,6 +76,8 @@
 ;; they are implemented.
 ;; make "Space" key faster to react
 (setq which-key-idle-delay 0.1)
+;; emacs server port
+(setq server-port 12345)
 ;; maximize the screen
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 ;; make vterm popup to appear on the far right
