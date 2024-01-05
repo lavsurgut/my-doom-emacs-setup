@@ -134,3 +134,19 @@
               ))
   ;;(add-hook 'ejc-sql-minor-mode-hook 'k/ejc-sql-mode-hook)
   )
+
+(use-package! elfeed-webkit
+  :ensure
+  :after elfeed)
+
+(after! lsp-mode
+  (setq gofmt-command "goimports")
+  (setq  lsp-go-analyses '((fieldalignment . t)
+                           (nilness . t)
+                           (shadow . t)
+                           (unusedparams . t)
+                           (unusedwrite . t)
+                           (useany . t)
+                           (unusedvariable . t)))
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  )
