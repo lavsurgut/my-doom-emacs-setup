@@ -12,6 +12,8 @@
 (package! crdt)
 (package! leuven-theme)
 (package! virtualenvwrapper)
+(package! dotenv
+  :recipe (:host github :repo "pkulev/dotenv.el"))
 (package! elfeed-webkit)
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)

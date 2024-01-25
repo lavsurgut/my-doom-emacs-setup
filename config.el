@@ -152,3 +152,45 @@
                            (unusedvariable . t)))
   (add-hook 'before-save-hook 'gofmt-before-save)
   )
+
+(use-package! dotenv
+  :init
+  (when (file-exists-p (expand-file-name ".env" doom-user-dir))
+    (add-hook! 'doom-init-ui-hook
+      (defun +dotenv-startup-hook ()
+        "Load .env after starting emacs"
+        (dotenv-update-project-env doom-user-dir))))
+  :config
+  (add-hook! 'projectile-after-switch-project-hook
+    (defun +dotenv-projectile-hook ()
+      "Load .env after changing projects."
+      (dotenv-update-project-env (projectile-project-root)))))
+
+(after! lsp-mode
+  (setq lsp-log-io nil
+        lsp-file-watch-threshold 4000
+        lsp-headerline-breadcrumb-enable t
+        lsp-headerline-breadcrumb-icons-enable nil
+        lsp-headerline-breadcrumb-segments '(file symbols)
+        lsp-imenu-index-symbol-kinds '(File Module Namespace Package Class Method Enum Interface
+                                       Function Variable Constant Struct Event Operator TypeParameter)
+        )
+  (dolist (dir '("[/\\\\]\\.ccls-cache\\'"
+                 "[/\\\\]\\.mypy_cache\\'"
+                 "[/\\\\]\\.pytest_cache\\'"
+                 "[/\\\\]\\.cache\\'"
+                 "[/\\\\]\\.clwb\\'"
+                 "[/\\\\]__pycache__\\'"
+                 "[/\\\\]bazel-bin\\'"
+                 "[/\\\\]bazel-code\\'"
+                 "[/\\\\]bazel-genfiles\\'"
+                 "[/\\\\]bazel-out\\'"
+                 "[/\\\\]bazel-testlogs\\'"
+                 "[/\\\\]third_party\\'"
+                 "[/\\\\]third-party\\'"
+                 "[/\\\\]buildtools\\'"
+                 "[/\\\\]out\\'"
+                 "[/\\\\]build\\'"
+                 ))
+    (push dir lsp-file-watch-ignored-directories))
+  )
