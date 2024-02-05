@@ -11,7 +11,7 @@
 (package! sqlformat)
 (package! crdt)
 (package! leuven-theme)
-(package! virtualenvwrapper)
+                                        ;(package! virtualenvwrapper)
 (package! dotenv
   :recipe (:host github :repo "pkulev/dotenv.el"))
 (package! elfeed-webkit)

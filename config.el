@@ -2,7 +2,7 @@
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
-
+;;(doom-load-envvars-file "~/.doom.d/my-env")
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
@@ -76,8 +76,6 @@
 ;; they are implemented.
 ;; make "Space" key faster to react
 (setq which-key-idle-delay 0.1)
-;; emacs server port
-(setq server-port 12345)
 ;; maximize the screen
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 ;; make vterm popup to appear on the far right
@@ -135,6 +133,7 @@
                                         ;(ejc-result-table-impl 'ejc-result-mode)
               ))
   ;;(add-hook 'ejc-sql-minor-mode-hook 'k/ejc-sql-mode-hook)
+  ;;(load-file "~/.creds/ejc-sql.el")
   )
 
 (use-package! elfeed-webkit
@@ -175,6 +174,7 @@
         lsp-imenu-index-symbol-kinds '(File Module Namespace Package Class Method Enum Interface
                                        Function Variable Constant Struct Event Operator TypeParameter)
         )
+  (advice-add 'lsp :before (lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
   (dolist (dir '("[/\\\\]\\.ccls-cache\\'"
                  "[/\\\\]\\.mypy_cache\\'"
                  "[/\\\\]\\.pytest_cache\\'"
